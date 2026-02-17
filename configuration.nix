@@ -17,7 +17,12 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  boot.kernelParams = [ "nvidia_drm.fbdev=1" ];
+  boot.kernelParams = [ 
+    "nvidia-drm.modeset=1" 
+    "acpi_enforce_resources=lax" 
+  ];
+
+  boot.kernelModules = [ "i2c-dev" "i2c-piix4" ];
 
   # --- Localization (Carried over from your fresh install) ---
   time.timeZone = "America/Denver";
@@ -93,7 +98,12 @@
     };
   };
 
-  services.hardware.openrgb.enable = true;
+  services.hardware.openrgb = {
+    enable = true;
+    package = pkgs.openrgb-with-all-plugins;
+    motherboard = "amd"; #B450 Tomahawk (AM4)
+  };
+
   services.udev.extraRules = ''
     KERNEL=="uinput", SUBSYSTEM=="misc", OPTIONS+="static_node=uinput", TAG+="uaccess"'';
 
