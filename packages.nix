@@ -1,31 +1,50 @@
 { pkgs, ... }:
 
 {
-  # Steam configuration
+  # 1. Steam configuration
   programs.steam = {
     enable = true;
     remotePlay.openFirewall = true;
     dedicatedServer.openFirewall = true;
   };
 
-  # Sunshine Service (The Host)
+  # 2. Sunshine Service (The Host)
   services.sunshine = {
     enable = true;
     autoStart = true;
-    capSysAdmin = true; # Allows Sunshine to capture the screen without being root
-    openFirewall = true; # Opens 47984-48010 for Moonlight
+    capSysAdmin = true;
+    openFirewall = true;
+    settings = {
+      encoder = "nvenc";
+    };
+    applications = {
+      apps = [
+        {
+          name = "Steam Big Picture DeckUI";
+          cmd = "steam steam://open/bigpicture";
+          detached = [ "steam steam://open/bigpicture" ];
+        }
+        {
+          name = "Desktop";
+          cmd = "xterm"; 
+        }
+      ];
+    };
   };
 
+  # 3. System Packages (Added missing bracket here)
   environment.systemPackages = with pkgs; [
     vesktop
     git
     htop
-    btop
-    nvtopPackages.nvidia
-    firefox
-    
-    # Optional: Moonlight (The Client) 
-    # Add this if you want to stream FROM other PCs to this one
-    # moonlight-qt 
+    nvtopPackages.nvidia # Added this so you can monitor your GPU!
+    steam
   ];
+
+  # 4. Global Hardware Settings (Must be at the top level, not inside Sunshine)
+  hardware.nvidia.nvidiaSettings = true;
+  hardware.graphics = {
+    enable = true;
+    enable32Bit = true; # Good for Steam
+  };
 }

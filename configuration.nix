@@ -63,6 +63,17 @@
     pulse.enable = true;
   };
 
+  # 1. Enable the Tailscale service
+  services.tailscale.enable = true;
+
+  # 2. Open the firewall for Tailscale's UDP port
+  # This helps with "Direct Connections" (speed!)
+  networking.firewall.allowedUDPPorts = [ 41641 ];
+
+  # 3. Trust the tailscale interface
+  # This ensures your PC doesn't block traffic coming FROM your other devices
+  networking.firewall.trustedInterfaces = [ "tailscale0" ];
+
   # --- User Account ---
   users.users = {
 
@@ -81,6 +92,9 @@
       # Notice I left out "wheel" - only add it if you want her to have sudo/admin rights
     };
   };
+
+  services.udev.extraRules = ''
+    KERNEL=="uinput", SUBSYSTEM=="misc", OPTIONS+="static_node=uinput", TAG+="uaccess"'';
 
   environment.shellAliases = {
     rebuild = "sudo nixos-rebuild switch --flake ~/nixos-config#chill";
