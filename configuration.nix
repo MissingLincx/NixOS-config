@@ -93,6 +93,7 @@
     };
   };
 
+  services.hardware.openrgb.enable = true;
   services.udev.extraRules = ''
     KERNEL=="uinput", SUBSYSTEM=="misc", OPTIONS+="static_node=uinput", TAG+="uaccess"'';
 

@@ -14,6 +14,12 @@
     autoStart = true;
     capSysAdmin = true;
     openFirewall = true;
+
+    package = pkgs.sunshine.override {
+      cudaSupport = true;
+      stdenv = pkgs.cudaPackages.backendStdenv;
+    };
+
     settings = {
       encoder = "nvenc";
     };
@@ -21,8 +27,7 @@
       apps = [
         {
           name = "Steam Big Picture DeckUI";
-          cmd = "steam steam://open/bigpicture";
-          detached = [ "steam steam://open/bigpicture" ];
+          cmd = "/run/current-system/sw/bin/steam -tenfoot -steamos";
         }
         {
           name = "Desktop";
@@ -38,6 +43,8 @@
     git
     htop
     nvtopPackages.nvidia # Added this so you can monitor your GPU!
+    cudaPackages.cuda_nvcc
+    linuxPackages.nvidia_x11
     steam
   ];
 
