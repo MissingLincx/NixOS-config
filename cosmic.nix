@@ -5,7 +5,8 @@
   services.displayManager.cosmic-greeter.enable = true;
 
   environment.cosmic.excludePackages = with pkgs; [
-
+    cosmic-store
+    cosmic-edit
   ];
 
   # NVIDIA Fix from the Wiki (prevents weird "phantom" monitor issues)
