@@ -9,8 +9,19 @@
 
   # --- Flake & System Core ---
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
-  networking.hostName = "chill"; # Matches your flake.nix 'chill' configuration
-  networking.networkmanager.enable = true;
+  networking.hostName = "chill";
+
+  # --- Enable WoL ---
+  networking.interfaces.enp34s0.wakeOnLan.enable = true;
+  networking.firewall = {
+   # 9 for Wol, 41641 for Tailscale
+    allowedUDPPorts = [ 9 41641 ];
+  };
+
+  # --- Enable Tailscale ---
+  services.tailscale.enable = true;
+  networking.firewall.trustedInterfaces = [ "tailscale0" ];
+
   nixpkgs.config.allowUnfree = true;
 
   # --- Bootloader ---
@@ -78,17 +89,6 @@
     };
   };
 
-  # 1. Enable the Tailscale service
-  services.tailscale.enable = true;
-
-  # 2. Open the firewall for Tailscale's UDP port
-  # This helps with "Direct Connections" (speed!)
-  networking.firewall.allowedUDPPorts = [ 41641 ];
-
-  # 3. Trust the tailscale interface
-  # This ensures your PC doesn't block traffic coming FROM your other devices
-  networking.firewall.trustedInterfaces = [ "tailscale0" ];
-
   # --- User Account ---
   users.users = {
 
@@ -104,7 +104,6 @@
       isNormalUser = true;
       description = "Maren";
       extraGroups = [ "networkmanager" "video" ]; 
-      # Notice I left out "wheel" - only add it if you want her to have sudo/admin rights
     };
   };
 
@@ -115,7 +114,9 @@
   };
 
   services.udev.extraRules = ''
-    KERNEL=="uinput", SUBSYSTEM=="misc", OPTIONS+="static_node=uinput", TAG+="uaccess"'';
+    # Input/Controller Rule
+    KERNEL=="uinput", SUBSYSTEM=="misc", OPTIONS+="static_node=uinput", TAG+="uaccess"
+  '';  
 
   environment.shellAliases = {
     rebuild = "sudo nixos-rebuild switch --flake ~/nixos-config#chill";
@@ -126,6 +127,8 @@
     git
     vim
     curl
+    pkgs.ethtool
+    wakeonlan
   ];
 
   system.stateVersion = "25.11"; 
