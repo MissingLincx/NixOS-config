@@ -129,6 +129,10 @@
     curl
     pkgs.ethtool
     wakeonlan
+    tmux
+    helix
+    trivy
+    tldr
   ];
 
   system.stateVersion = "25.11"; 
