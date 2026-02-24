@@ -10,8 +10,12 @@
 
   programs.git = {
     enable = true;
-    userName = "MissingLincx";
-    userEmail = "lecluff@gmail.com";
+    settings = {
+      user = {
+        name = "MissingLincx";
+        email = "lecluff@gmail.com";
+      };
+    };
   };
 
   home.packages = with pkgs; [
