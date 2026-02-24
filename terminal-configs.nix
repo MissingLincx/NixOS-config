@@ -8,6 +8,8 @@
     '';
     shellAliases = {
       rebuild = "sudo nixos-rebuild switch --flake ~/nixos-config/.#chill";
+      wlab = "sudo /run/current-system/specialisation/lab-mode/bin/switch-to-configuration test";
+      unlab = "sudo /run/current-system/bin/switch-to-configuration test";
     };
   };
 
