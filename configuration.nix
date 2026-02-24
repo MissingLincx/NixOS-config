@@ -5,6 +5,7 @@
     ./hardware-configuration.nix
     ./gaming-services.nix
     ./cosmic.nix 
+    ./windows-lab.nix
   ];
 
   # --- Flake & System Core ---

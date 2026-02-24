@@ -4,17 +4,22 @@
   specialisation.lab-mode.configuration = {
     system.nixos.tags = [ "windows-ad-lab" ];
 
-    # Enable the virtualization brain
+    # 1. Virtualization setup
     virtualisation.libvirtd.enable = true;
     programs.virt-manager.enable = true;
 
-    # Add any specific lab-only tools here
+    # 2. Add linc to libvirtd group without redefining the whole user
+    users.users.linc.extraGroups = [ "libvirtd" ];
+
+    # 3. Lab-specific packages
     environment.systemPackages = with pkgs; [
-      quickemu    # Great for "I just need a Win11 VM right now"
+      quickemu
       virt-viewer
     ];
 
-    # This ensures your user can manage VMs without 'sudo' every time
-    users.users.Linc.extraGroups = [ "libvirtd" ];
+    environment.variables.WLAB_ACTIVE = "󰖳 AD-LAB";
+
+    # 4. Networking for VMs
+    networking.firewall.trustedInterfaces = [ "virbr0" ];
   };
 }

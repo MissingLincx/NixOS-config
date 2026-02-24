@@ -8,8 +8,8 @@
     '';
     shellAliases = {
       rebuild = "sudo nixos-rebuild switch --flake ~/nixos-config/.#chill";
-      wlab = "sudo /run/current-system/specialisation/lab-mode/bin/switch-to-configuration test";
-      unlab = "sudo /run/current-system/bin/switch-to-configuration test";
+      wlab = "export WLAB_ACTIVE='󰖳 AD-LAB' && sudo nixos-rebuild test --specialisation lab-mode --flake .#chill";
+      unlab = "unset WLAB_ACTIVE && sudo nixos-rebuild test --flake .#chill";
     };
   };
 
@@ -27,6 +27,11 @@
     enable = true;
     settings = {
       add_newline = false;
+      format = "$env_var$all";
+      env_var.WLAB_ACTIVE = {
+	style = "bold cyan";
+	format = "[$value]($style) ";
+      };
       character = {
         success_symbol = "[➜](bold green)";
         error_symbol = "[➜](bold red)";
