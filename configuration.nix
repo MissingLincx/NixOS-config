@@ -3,74 +3,37 @@
 {
   imports = [ 
     ./hardware-configuration.nix
-    ./packages.nix
+    ./gaming-services.nix
     ./cosmic.nix 
   ];
 
   # --- Flake & System Core ---
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nixpkgs.config.allowUnfree = true;
   networking.hostName = "chill";
 
-  # --- Enable WoL ---
-  networking.interfaces.enp34s0.wakeOnLan.enable = true;
-  networking.firewall = {
-   # 9 for Wol, 41641 for Tailscale
-    allowedUDPPorts = [ 9 41641 ];
-  };
-
-  # --- Enable Tailscale ---
-  services.tailscale.enable = true;
-  networking.firewall.trustedInterfaces = [ "tailscale0" ];
-
-  nixpkgs.config.allowUnfree = true;
-
-  # --- Bootloader ---
+  # --- Bootloader & Kernel ---
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-
-  boot.kernelParams = [ 
-    "nvidia-drm.modeset=1" 
-    "acpi_enforce_resources=lax" 
-  ];
-
-  boot.kernelModules = [ "i2c-dev" "i2c-piix4" ];
-
-  # --- Localization (Carried over from your fresh install) ---
-  time.timeZone = "America/Denver";
-  i18n.defaultLocale = "en_US.UTF-8";
-  i18n.extraLocaleSettings = {
-    LC_ADDRESS = "en_US.UTF-8";
-    LC_IDENTIFICATION = "en_US.UTF-8";
-    LC_MEASUREMENT = "en_US.UTF-8";
-    LC_MONETARY = "en_US.UTF-8";
-    LC_NAME = "en_US.UTF-8";
-    LC_NUMERIC = "en_US.UTF-8";
-    LC_PAPER = "en_US.UTF-8";
-    LC_TELEPHONE = "en_US.UTF-8";
-    LC_TIME = "en_US.UTF-8";
-  };
+  boot.kernelParams = [ "nvidia-drm.modeset=1" "nvidia_drm.fbdev=1" "acpi_enforce_resources=lax" ];
+  boot.kernelModules = [ "i2c-dev" "i2c-piix4" "uinput" ];
 
   # --- Graphics & NVIDIA (Optimized for RTX 2060) ---
   services.xserver.enable = true;
   services.xserver.videoDrivers = [ "nvidia" ];
-
   hardware.graphics = {
     enable = true;
     enable32Bit = true;
   };
-
   hardware.nvidia = {
     modesetting.enable = true;
-    powerManagement.enable = true; 
-    open = true; 
+    powerManagement.enable = true;
+    open = true;
     package = config.boot.kernelPackages.nvidiaPackages.stable;
+    nvidiaSettings = true;
   };
 
-  # --- Desktop Management ---
-  #services.displayManager.gdm.enable = true;
-  #services.desktopManager.gnome.enable = true;
-
-  # --- Sound (Carried over from your fresh install) ---
+  # --- Sound  ---
   security.rtkit.enable = true;
   services.pipewire = {
     enable = true;
@@ -78,6 +41,12 @@
     alsa.support32Bit = true;
     pulse.enable = true;
   };
+
+  # --- Networking ---
+  networking.interfaces.enp34s0.wakeOnLan.enable = true;
+  networking.firewall.allowedUDPPorts = [ 9 41641 ];
+  services.tailscale.enable = true;
+  networking.firewall.trustedInterfaces = [ "tailscale0" ];
 
   services.openssh = {
     enable = true;
@@ -88,6 +57,10 @@
       PermitRootLogin = "no";
     };
   };
+
+  # --- Localization (Carried over from your fresh install) ---
+  time.timeZone = "America/Denver";
+  i18n.defaultLocale = "en_US.UTF-8";
 
   # --- User Account ---
   users.users = {
@@ -100,12 +73,17 @@
         firefox
       ];
     };
-    maren = { # Replace 'wife_name' with her actual username (lowercase, no spaces)
+    maren = {
       isNormalUser = true;
       description = "Maren";
       extraGroups = [ "networkmanager" "video" ]; 
+      packages = with pkgs; [
+        google-chrome
+      ];
     };
   };
+
+  # --- Misc ---
 
   services.hardware.openrgb = {
     enable = true;
@@ -118,10 +96,6 @@
     KERNEL=="uinput", SUBSYSTEM=="misc", OPTIONS+="static_node=uinput", TAG+="uaccess"
   '';  
 
-  environment.shellAliases = {
-    rebuild = "sudo nixos-rebuild switch --flake ~/nixos-config#chill";
-  };
-
   # --- System Packages ---
   environment.systemPackages = with pkgs; [
     git
@@ -129,10 +103,6 @@
     curl
     pkgs.ethtool
     wakeonlan
-    tmux
-    helix
-    trivy
-    tldr
   ];
 
   system.stateVersion = "25.11"; 

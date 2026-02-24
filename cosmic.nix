@@ -9,11 +9,5 @@
     cosmic-edit
   ];
 
-  # NVIDIA Fix from the Wiki (prevents weird "phantom" monitor issues)
-  boot.kernelParams = [ "nvidia_drm.fbdev=1" ];
-
   services.system76-scheduler.enable = true;
-
-  # System76 recommends the 'open' kernels for COSMIC
-  hardware.nvidia.open = true;
 }
