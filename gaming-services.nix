@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ config, pkgs, inputs, ... }:
 
 {
   # --- Steam ---
@@ -14,10 +14,12 @@
     autoStart = true;
     capSysAdmin = true;
     openFirewall = true;
-    package = pkgs.sunshine.override {
-      cudaSupport = true;
-      stdenv = pkgs.cudaPackages.backendStdenv;
-    };
+
+    package = inputs.nixpkgs-sunshine.legacyPackages.${pkgs.system}.sunshine;
+#    package = pkgs.sunshine.override {
+#      cudaSupport = true;
+#      stdenv = pkgs.cudaPackages.backendStdenv;
+#    };
   };
 
   users.users.linc.extraGroups = [ "video" "render" "input" ];

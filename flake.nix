@@ -10,9 +10,11 @@
       url = "github:MissingLincx/wallpapers";
       flake = false;
     };
+    #working version of sunshine
+    nixpkgs-sunshine.url = "github:nixos/nixpkgs/a82ccc39b39b621151d6732718e3e250109076fa";
   };
 
-  outputs = { self, nixpkgs, home-manager, wallpapers, ...} @ inputs: {
+  outputs = { self, nixpkgs, home-manager, wallpapers, nixpkgs-sunshine, ...} @ inputs: {
     nixosConfigurations.chill = nixpkgs.lib.nixosSystem {
       specialArgs = { inherit inputs; };
       system = "x86_64-linux";
