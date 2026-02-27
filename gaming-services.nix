@@ -1,4 +1,4 @@
-{ config, pkgs, inputs, ... }:
+{ config, pkgs, inputs, lib, ... }:
 
 {
   # --- Steam ---
@@ -14,12 +14,11 @@
     autoStart = true;
     capSysAdmin = true;
     openFirewall = true;
-
-    package = inputs.nixpkgs-sunshine.legacyPackages.${pkgs.system}.sunshine;
-#    package = pkgs.sunshine.override {
-#      cudaSupport = true;
-#      stdenv = pkgs.cudaPackages.backendStdenv;
-#    };
+    package = pkgs.sunshine.override {
+      cudaSupport = true;
+      cudaPackages = pkgs.cudaPackages;
+      boost = pkgs.boost187;
+    };
   };
 
   users.users.linc.extraGroups = [ "video" "render" "input" ];
@@ -27,8 +26,6 @@
   # --- Security & Core Drivers ---
 
   environment.systemPackages = with pkgs; [
-    cudaPackages.cuda_nvcc
-    linuxPackages.nvidia_x11
-    steam
+    nvtopPackages.nvidia
   ];
 }

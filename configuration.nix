@@ -25,6 +25,11 @@
   hardware.graphics = {
     enable = true;
     enable32Bit = true;
+    extraPackages = with pkgs; [
+      nvidia-vaapi-driver
+      libva-vdpau-driver
+      libvdpau-va-gl
+    ];
   };
   hardware.nvidia = {
     modesetting.enable = true;
@@ -59,7 +64,7 @@
     };
   };
 
-  # --- Localization (Carried over from your fresh install) ---
+  # --- Localization ---
   time.timeZone = "America/Denver";
   i18n.defaultLocale = "en_US.UTF-8";
 
