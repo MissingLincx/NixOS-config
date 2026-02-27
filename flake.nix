@@ -6,9 +6,13 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    wallpapers = {
+      url = "github:MissingLincx/wallpapers";
+      flake = false;
+    };
   };
 
-  outputs = { self, nixpkgs, home-manager, ...} @ inputs: {
+  outputs = { self, nixpkgs, home-manager, wallpapers, ...} @ inputs: {
     nixosConfigurations.chill = nixpkgs.lib.nixosSystem {
       specialArgs = { inherit inputs; };
       system = "x86_64-linux";
@@ -16,6 +20,7 @@
         ./configuration.nix
 	home-manager.nixosModules.home-manager
         {
+          home-manager.extraSpecialArgs = { inherit inputs; };
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
 	  home-manager.backupFileExtension = "backup";

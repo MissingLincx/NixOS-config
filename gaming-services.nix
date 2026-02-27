@@ -18,11 +18,9 @@
       cudaSupport = true;
       stdenv = pkgs.cudaPackages.backendStdenv;
     };
-    settings = {
-      encoder = "nvenc";
-      output_name = "DP-2";
-    };
   };
+
+  users.users.linc.extraGroups = [ "video" "render" "input" ];
 
   # --- Security & Core Drivers ---
 

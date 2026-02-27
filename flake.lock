@@ -39,7 +39,24 @@
     "root": {
       "inputs": {
         "home-manager": "home-manager",
-        "nixpkgs": "nixpkgs"
+        "nixpkgs": "nixpkgs",
+        "wallpapers": "wallpapers"
+      }
+    },
+    "wallpapers": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1772178336,
+        "narHash": "sha256-Tq3qZQPOFB+0ZcaWXEBOw7uiNepw3OcC5l9U19MDWSo=",
+        "owner": "MissingLincx",
+        "repo": "wallpapers",
+        "rev": "86a36f2587df1b86f86da98d38dd4571e52846d1",
+        "type": "github"
+      },
+      "original": {
+        "owner": "MissingLincx",
+        "repo": "wallpapers",
+        "type": "github"
       }
     }
   },

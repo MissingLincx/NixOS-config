@@ -1,9 +1,10 @@
-{ config, pkgs, ... }:
+{ config, pkgs, inputs, ... }:
 
 {
   imports = [
     ./terminal-configs.nix
     ./gaming-configs.nix
+    ./wallpapers.nix
   ];
 
   home.username = "linc";
