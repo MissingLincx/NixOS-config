@@ -5,6 +5,7 @@
     ./terminal-configs.nix
     ./gaming-configs.nix
     ./wallpapers.nix
+    ./conky.nix
   ];
 
   home.username = "linc";
