@@ -1,5 +1,5 @@
 # conky.nix
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 
 {
   services.conky = {
@@ -52,16 +52,37 @@ conky.text = [[
 
 ''${color #cba6f7}CPU ''${hr}
 ''${color #f5c2e7}Usage:''${color} $cpu% ''${color #f5c2e7}Freq:''${color} $freq_g GHz
-''${cpugraph 25,150 f5c2e7 cba6f7}
+''${cpugraph 25,250 f5c2e7 cba6f7}
 
 ''${color #cba6f7}MEMORY ''${hr}
-''${color #f5c2e7}RAM:''${color} $mem/$memmax - $memperc%
+''${color #f5c2e7}RAM:''${color} $mem / $memmax ''${alignr}$memperc%
 ''${membar 6}
+''${color #f5c2e7}SWAP:''${color} $swap / $swapmax ''${alignr}$swapperc%
+''${swapbar 6}
+
+''${color #cba6f7}STORAGE ''${hr}
+''${color #f5c2e7}Root:''${color} ''${fs_used /} / ''${fs_size /} ''${alignr}''${fs_used_perc /}%
+''${fs_bar 6 /}
+''${color #f5c2e7}Home:''${color} ''${fs_used /home} / ''${fs_size /home} ''${alignr}''${fs_used_perc /home}%
+''${fs_bar 6 /home}
+
+''${color #cba6f7}TOP PROCESSES ''${hr}
+''${color #f5c2e7}''${top name 1} ''${alignr}''${top cpu 1}%
+''${color}''${top name 2} ''${alignr}''${top cpu 2}%
+''${color}''${top name 3} ''${alignr}''${top cpu 3}%
+''${color}''${top name 4} ''${alignr}''${top cpu 4}%
 
 ''${color #cba6f7}NETWORK (enp34s0) ''${hr}
-''${color #f5c2e7}Down:''${color} ''${downspeed enp34s0} ''${color #f5c2e7} Up:''${color} ''${upspeed enp34s0}
-''${downspeedgraph enp34s0 25,150 f5c2e7 cba6f7}
+''${color #f5c2e7}Local IP:''${color} ''${alignr}''${addr enp34s0}
+''${color #f5c2e7}Down:''${color} ''${downspeed enp34s0} ''${alignr}''${color #f5c2e7}Up:''${color} ''${upspeed enp34s0}
+''${downspeedgraph enp34s0 25,250 f5c2e7 cba6f7}
 ]]
     '';
+
+  };
+
+  systemd.user.services.conky.Service = {
+    KillSignal = "SIGKILL";
+    Restart = lib.mkForce "on-failure";
   };
 }

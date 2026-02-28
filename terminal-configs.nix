@@ -3,13 +3,10 @@
 {
   programs.bash = {
     enable = true;
-    initExtra = ''
-      eval "$(starship init bash)"
-    '';
     shellAliases = {
       rebuild = "sudo nixos-rebuild switch --flake ~/nixos-config/.#chill";
-      wlab = "export WLAB_ACTIVE='󰖳 AD-LAB' && sudo nixos-rebuild test --specialisation lab-mode --flake .#chill";
-      unlab = "unset WLAB_ACTIVE && sudo nixos-rebuild test --flake .#chill";
+      wlab = "sudo nixos-rebuild test --specialisation lab-mode --flake .#chill && newgrp libvirtd";
+      unlab = "sudo nixos-rebuild test --flake .#chill";
     };
   };
 
@@ -22,28 +19,27 @@
       };
     };
   };
-
+/*
   programs.starship = {
     enable = true;
+
     settings = {
       add_newline = false;
-      format = "$env_var$all";
+  
+      # 1. We manually define the order. 
+      # This puts the Windows icon BEFORE the directory (nixos-config)
+      format = ''$env_var$directory$git_branch$git_status$nix_shell$character'';
+
+      # 2. Add an explicit 'variable' name to the module
       env_var.WLAB_ACTIVE = {
-	style = "bold cyan";
-	format = "[$value]($style) ";
-      };
-      character = {
-        success_symbol = "[➜](bold green)";
-        error_symbol = "[➜](bold red)";
-      };
-      nix_shell = {
-        symbol = " ";
-        format = "via [$symbol\\($state\\)]($style) ";
-        style = "bold blue";
+        variable = "WLAB_ACTIVE"; 
+        style = "bold cyan";
+        format = "[$value]($style)"; # Removed the trailing space to keep it tight
+        disabled = false;            # Force it to stay active
       };
     };
   };
-
+*/
   home.packages = with pkgs; [
     htop
     nvtopPackages.nvidia

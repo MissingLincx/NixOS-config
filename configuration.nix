@@ -74,7 +74,7 @@
     linc = {
       isNormalUser = true;
       description = "Lincoln";
-      extraGroups = [ "networkmanager" "wheel" "video"  ];
+      extraGroups = [ "networkmanager" "wheel" "video" "libvirtd" "kvm"  ];
       packages = with pkgs; [
         firefox
       ];
