@@ -52,6 +52,7 @@
   networking.interfaces.enp34s0.wakeOnLan.enable = true;
   networking.firewall.allowedUDPPorts = [ 9 41641 ];
   services.tailscale.enable = true;
+  services.tailscale.extraSetFlags = [ "--operator=linc" ];
   networking.firewall.trustedInterfaces = [ "tailscale0" ];
 
   services.openssh = {
@@ -77,6 +78,7 @@
       extraGroups = [ "networkmanager" "wheel" "video" "libvirtd" "kvm"  ];
       packages = with pkgs; [
         firefox
+        spotify
       ];
     };
     maren = {
@@ -116,6 +118,7 @@
     curl
     pkgs.ethtool
     wakeonlan
+    pkgs.tailscale-systray
   ];
 
   system.stateVersion = "25.11"; 
