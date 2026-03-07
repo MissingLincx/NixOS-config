@@ -13,10 +13,20 @@
   home.homeDirectory = "/home/linc";
   home.stateVersion = "25.11";
 
+  programs.vscode = {
+    enable = true;
+    package = pkgs.vscodium-fhs;
+  };
+
   home.packages = with pkgs; [
     brave
     vesktop
     obsidian
+    (pkgs.python3.withPackages (ps: with ps; [
+    pandas
+    requests
+    numpy
+    ]))
   ];
 
   programs.home-manager.enable = true;

@@ -43,7 +43,13 @@
         ''${color #f5c2e7}w / b     ''${color} Jump Word forward / back
         ''${color #f5c2e7}0 / $     ''${color} Start / End of line
         ''${color #f5c2e7}A         ''${color} Append at end of line
-        ''${color #f5c2e7}cw        ''${color} Change word (delete + Insert)
+        ''${color #f5c2e7}gg        ''${color} Jump to top of file
+        ''${color #f5c2e7}G         ''${color} Jump to end of file
+        ''${color #f5c2e7}[number_of_line] + g ''${color} Jump to line
+        ''${color #f5c2e7}h,j,k,l   ''${color} Move cursor left, down, up, right
+        ''${color #f5c2e7}/ + [word]''${color} Jump to word (hit enter)
+        ''${color #f5c2e7}/ + [word] + 'n' or 'N' ''${color} Cycle through word search
+        ''${color #f5c2e7}:%s/[word1]/[word2]/g''${color} Replace all instances of [word1] with [word2] (add 'c' to end of command to replace some)
 
         ''${color #cba6f7}CLI TOOLS ''${hr}
         ''${color #f5c2e7}grep -r   ''${color} Recursive search
