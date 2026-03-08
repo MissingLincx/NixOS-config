@@ -2,6 +2,7 @@
   description = "Linc's chill Nixos configuration flake.";
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    nvf.url = "github:notashelf/nvf";
 
     home-manager = {
       url = "github:nix-community/home-manager";
@@ -14,7 +15,7 @@
     };
   };
 
-  outputs = { self, nixpkgs,  home-manager, wallpapers, ...} @ inputs: {
+  outputs = { self, nixpkgs,  home-manager, wallpapers, nvf, ...} @ inputs: {
     nixosConfigurations.chill = nixpkgs.lib.nixosSystem {
       specialArgs = { inherit inputs; };
       system = "x86_64-linux";
