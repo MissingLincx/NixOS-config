@@ -67,6 +67,8 @@
     brave
     vesktop
     obsidian
+    pkgs.rgbds
+    pkgs.godot_4
     (pkgs.python3.withPackages (ps: with ps; [
     pandas
     requests

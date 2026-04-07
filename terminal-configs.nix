@@ -19,27 +19,24 @@
       };
     };
   };
-/*
+
   programs.starship = {
     enable = true;
 
     settings = {
       add_newline = false;
   
-      # 1. We manually define the order. 
-      # This puts the Windows icon BEFORE the directory (nixos-config)
-      format = ''$env_var$directory$git_branch$git_status$nix_shell$character'';
+      format = ''$directory$git_branch$git_status$character'';
 
-      # 2. Add an explicit 'variable' name to the module
       env_var.WLAB_ACTIVE = {
         variable = "WLAB_ACTIVE"; 
         style = "bold cyan";
-        format = "[$value]($style)"; # Removed the trailing space to keep it tight
-        disabled = false;            # Force it to stay active
+        format = "[$value]($style)"; 
+        disabled = false;
       };
     };
   };
-*/
+
   home.packages = with pkgs; [
     htop
     nvtopPackages.nvidia
@@ -51,5 +48,6 @@
     eza
     zoxide
     nmap
+    glow
   ];
 }
