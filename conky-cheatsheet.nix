@@ -58,6 +58,7 @@
         ''${color #f5c2e7}!!        ''${color} Run last command as sudo
         ]]
       ''}";
+      KillSignal = "SIGKILL";
     };
   };
 }

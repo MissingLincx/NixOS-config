@@ -1,4 +1,4 @@
-{ config, pkgs, inputs, ... }:
+{ config, pkgs, ... }:
 
 {
   imports = [ 
@@ -6,6 +6,7 @@
     ./gaming-services.nix
     ./cosmic.nix 
     ./windows-lab.nix
+    ./modules/graphics.nix
   ];
 
   # --- Flake & System Core ---
@@ -18,26 +19,7 @@
   boot.loader.efi.canTouchEfiVariables = true;
   boot.kernelParams = [ "nvidia-drm.modeset=1" "nvidia_drm.fbdev=1" "acpi_enforce_resources=lax" ];
   boot.kernelModules = [ "i2c-dev" "i2c-piix4" "uinput" ];
-
-  # --- Graphics & NVIDIA (Optimized for RTX 2060) ---
-  services.xserver.enable = true;
-  services.xserver.videoDrivers = [ "nvidia" ];
-  hardware.graphics = {
-    enable = true;
-    enable32Bit = true;
-    extraPackages = with pkgs; [
-      nvidia-vaapi-driver
-      libva-vdpau-driver
-      libvdpau-va-gl
-    ];
-  };
-  hardware.nvidia = {
-    modesetting.enable = true;
-    powerManagement.enable = true;
-    open = true;
-    package = config.boot.kernelPackages.nvidiaPackages.stable;
-    nvidiaSettings = true;
-  };
+  systemd.settings.Manager.DefaultTimeoutStopSec = "5s";
 
   # --- Sound  ---
   security.rtkit.enable = true;

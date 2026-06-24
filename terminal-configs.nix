@@ -42,7 +42,6 @@
     nvtopPackages.nvidia
     pciutils
     tmux
-    helix
     tldr
     fzf
     eza
