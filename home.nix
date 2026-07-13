@@ -2,11 +2,11 @@
 
 {
   imports = [
-    ./terminal-configs.nix
-    ./gaming-configs.nix
-    ./wallpapers.nix
-    ./conky-dash.nix
-    ./conky-cheatsheet.nix
+    ./modules/environment/terminal-configs.nix
+    ./modules/gaming/gaming-configs.nix
+    ./modules/desktop/wallpapers.nix
+    ./modules/desktop/conky-dash.nix
+    ./modules/desktop/conky-cheatsheet.nix
     inputs.nvf.homeManagerModules.default
   ];
 
@@ -42,7 +42,7 @@
             lsp.enable = true;
             format.enable = true;
           };
-         nix.enable = true;
+        nix.enable = true;
         };
 
         theme = {
@@ -50,6 +50,12 @@
 
           name = "tokyonight";
           style = "storm";
+        };
+
+        clipboard = {
+          enable = true;
+          registers = "unnamedplus";
+          providers.wl-copy.enable = true;
         };
         
         statusline.lualine.enable = true;

@@ -9,13 +9,13 @@
     localNetworkGameTransfers.openFirewall = true;
   };
 
-  nixpkgs.overlays = [
-    (final: prev: {
-      steam = prev.steam.override {
-        extraArgs = "-pipewire";
-      };
-    })
-  ];
+  #  nixpkgs.overlays = [
+  #   (final: prev: {
+  #    steam = prev.steam.override {
+  #      extraArgs = "-pipewire";
+  #    };
+  #  })
+  #];
 
   xdg.portal = {
     enable = true;

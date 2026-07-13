@@ -3,10 +3,13 @@
 {
   imports = [ 
     ./hardware-configuration.nix
-    ./gaming-services.nix
-    ./cosmic.nix 
+    ./modules/gaming/gaming-services.nix
+    ./modules/desktop/cosmic.nix 
     ./windows-lab.nix
-    ./modules/graphics.nix
+    ./modules/hardware/nvidia.nix
+    ./modules/services/tailscale.nix
+    ./modules/services/ssh.nix
+    ./modules/hardware/rgb.nix
   ];
 
   # --- Flake & System Core ---
@@ -32,20 +35,7 @@
 
   # --- Networking ---
   networking.interfaces.enp34s0.wakeOnLan.enable = true;
-  networking.firewall.allowedUDPPorts = [ 9 41641 ];
-  services.tailscale.enable = true;
-  services.tailscale.extraSetFlags = [ "--operator=linc" ];
-  networking.firewall.trustedInterfaces = [ "tailscale0" ];
-
-  services.openssh = {
-    enable = true;
-    ports = [ 2222 ];
-    settings = {
-      PasswordAuthentication = false;
-      AllowUsers = [ "linc" ];
-      PermitRootLogin = "no";
-    };
-  };
+  networking.firewall.allowedUDPPorts = [ 9 ];
 
   # --- Localization ---
   time.timeZone = "America/Denver";
@@ -81,13 +71,6 @@
   ];
 
   # --- Misc ---
-
-  services.hardware.openrgb = {
-    enable = true;
-    package = pkgs.openrgb-with-all-plugins;
-    motherboard = "amd"; #B450 Tomahawk (AM4)
-  };
-
   services.udev.extraRules = ''
     # Input/Controller Rule
     KERNEL=="uinput", SUBSYSTEM=="misc", OPTIONS+="static_node=uinput", TAG+="uaccess"
@@ -100,7 +83,6 @@
     curl
     pkgs.ethtool
     wakeonlan
-    pkgs.tailscale-systray
   ];
 
   system.stateVersion = "25.11"; 
