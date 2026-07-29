@@ -20,7 +20,22 @@
       specialArgs = { inherit inputs; };
       system = "x86_64-linux";
       modules = [
-        ./configuration.nix
+        ./hosts/chill/configuration.nix
+	home-manager.nixosModules.home-manager
+        {
+          home-manager.extraSpecialArgs = { inherit inputs; };
+          home-manager.useGlobalPkgs = true;
+          home-manager.useUserPackages = true;
+	  home-manager.backupFileExtension = "backup";
+          home-manager.users.linc = import ./home.nix;
+        }
+      ];
+    };
+    nixosConfigurations.chilltop = nixpkgs.lib.nixosSystem {
+      specialArgs = { inherit inputs; };
+      system = "x86_64-linux";
+      modules = [
+        ./hosts/chilltop/configuration.nix
 	home-manager.nixosModules.home-manager
         {
           home-manager.extraSpecialArgs = { inherit inputs; };

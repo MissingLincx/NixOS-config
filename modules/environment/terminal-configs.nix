@@ -3,8 +3,9 @@
 {
   programs.bash = {
     enable = true;
-    shellAliases = {
-      rebuild = "sudo nixos-rebuild switch --flake ~/nixos-config/.#chill";
+   shellAliases = {
+      rebuild-chilltop = "sudo nixos-rebuild switch --flake ~/nixos-config/.#chilltop";
+      rebuild-chill = "sudo nixos-rebuild switch --flake ~/nixos-config/.#chill";
       wlab = "sudo nixos-rebuild test --specialisation lab-mode --flake .#chill && newgrp libvirtd";
       unlab = "sudo nixos-rebuild test --flake .#chill";
     };

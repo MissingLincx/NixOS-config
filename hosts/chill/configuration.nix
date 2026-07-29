@@ -3,13 +3,13 @@
 {
   imports = [ 
     ./hardware-configuration.nix
-    ./modules/gaming/gaming-services.nix
-    ./modules/desktop/cosmic.nix 
-    ./windows-lab.nix
-    ./modules/hardware/nvidia.nix
-    ./modules/services/tailscale.nix
-    ./modules/services/ssh.nix
-    ./modules/hardware/rgb.nix
+    ../../modules/gaming/gaming-services.nix
+    ../../modules/desktop/cosmic.nix 
+    ../../windows-lab.nix
+    ../../modules/hardware/nvidia.nix
+    ../../modules/services/tailscale.nix
+    ../../modules/services/ssh.nix
+    ../../modules/hardware/rgb.nix
   ];
 
   # --- Flake & System Core ---

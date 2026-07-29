@@ -6,7 +6,7 @@
     ./modules/gaming/gaming-configs.nix
     ./modules/desktop/wallpapers.nix
     ./modules/desktop/conky-dash.nix
-    ./modules/desktop/conky-cheatsheet.nix
+    #./modules/desktop/conky-cheatsheet.nix
     inputs.nvf.homeManagerModules.default
   ];
 
