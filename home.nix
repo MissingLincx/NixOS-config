@@ -20,6 +20,23 @@
     enableBashIntegration = true;
   };
 
+  programs.ghostty = {
+    enable = true;
+  	settings = {
+      theme = "Terafox";
+      font-size = 11;
+      font-family = "FiraCode Nerd Font"; # Ensure this font is in your home.packages
+    
+      window-decoration = true;
+      window-padding-x = 12;
+      window-padding-y = 8;
+    
+      background-opacity = 0.95;
+      background-blur = true;
+    };
+  };
+
+
   programs.nvf = {
     enable = true;
     settings = {
@@ -69,13 +86,15 @@
     vesktop
     obsidian
     pkgs.rgbds
-    pkgs.godot_4
     (pkgs.python3.withPackages (ps: with ps; [
     pandas
     requests
     numpy
     ]))
+	pkgs.nerd-fonts.fira-code
   ];
+
+  fonts.fontconfig.enable = true;
 
   programs.home-manager.enable = true;
 }

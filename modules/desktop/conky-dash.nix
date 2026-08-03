@@ -72,10 +72,10 @@ conky.text = [[
 ''${color}''${top name 3} ''${alignr}''${top cpu 3}%
 ''${color}''${top name 4} ''${alignr}''${top cpu 4}%
 
-''${color #cba6f7}NETWORK (enp34s0) ''${hr}
-''${color #f5c2e7}Local IP:''${color} ''${alignr}''${addr enp34s0}
-''${color #f5c2e7}Down:''${color} ''${downspeed enp34s0} ''${alignr}''${color #f5c2e7}Up:''${color} ''${upspeed enp34s0}
-''${downspeedgraph enp34s0 25,250 f5c2e7 cba6f7}
+''${color #cba6f7}NETWORK (''${exec ip route show default | awk '/default/ {print $5; exit}'}) ''${hr}
+''${color #f5c2e7}Local IP:''${color} ''${alignr}''${addrs ''${exec ip route show default | awk '/default/ {print $5; exit}'}}
+''${color #f5c2e7}Down:''${color} ''${downspeed ''${exec ip route show default | awk '/default/ {print $5; exit}'}} ''${alignr}''${color #f5c2e7}Up:''${color} ''${upspeed ''${exec ip route show default | awk '/default/ {print $5; exit}'}}
+''${downspeedgraph ''${exec ip route show default | awk '/default/ {print $5; exit}'} 25,250 f5c2e7 cba6f7}
 ]]
     '';
 
