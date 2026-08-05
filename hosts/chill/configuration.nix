@@ -4,6 +4,7 @@
   imports = [ 
     ./hardware-configuration.nix
     ../../modules/gaming/gaming-services.nix
+    ../../modules/gaming/gaming-configs.nix
     ../../modules/desktop/cosmic.nix 
     ../../windows-lab.nix
     ../../modules/hardware/nvidia.nix
