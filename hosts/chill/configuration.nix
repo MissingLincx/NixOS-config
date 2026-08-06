@@ -79,6 +79,9 @@
 
   # --- System Packages ---
   environment.systemPackages = with pkgs; [
+    vesktop
+    pkgs.rgbds
+    obsidian
     git
     vim
     curl
