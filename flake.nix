@@ -56,7 +56,7 @@
 
       chillwsl = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
-        extraSpecialArgs = { inherit inputs; };
+        specialArgs = { inherit inputs; };
         modules = [
           nixos-wsl.nixosModules.default
           home-manager.nixosModules.home-manager
