@@ -11,6 +11,7 @@
     ../../modules/services/tailscale.nix
     ../../modules/services/ssh.nix
     ../../modules/hardware/rgb.nix
+    ../../modules/llm/ollama.nix
   ];
 
   # --- Flake & System Core ---
@@ -19,7 +20,17 @@
   networking.hostName = "chill";
 
   # --- Bootloader & Kernel ---
-  boot.loader.systemd-boot.enable = true;
+  boot.loader.systemd-boot.enable = false;
+
+  boot.loader.limine.enable = true;
+  boot.loader.limine.secureBoot.enable = true;
+  boot.loader.timeout = 5;
+  boot.loader.limine.extraEntries = ''
+    /Windows 11
+      protocol: efi
+      path: uuid(f75e032e-b8f2-4987-b99d-0be6006843a9):/EFI/Microsoft/Boot/bootmgfw.efi
+      '';
+
   boot.loader.efi.canTouchEfiVariables = true;
   boot.kernelParams = [ "nvidia-drm.modeset=1" "nvidia_drm.fbdev=1" "acpi_enforce_resources=lax" ];
   boot.kernelModules = [ "i2c-dev" "i2c-piix4" "uinput" ];
@@ -79,9 +90,7 @@
 
   # --- System Packages ---
   environment.systemPackages = with pkgs; [
-    vesktop
-    pkgs.rgbds
-    obsidian
+    pkgs.sbctl          #for limine
     git
     vim
     curl
