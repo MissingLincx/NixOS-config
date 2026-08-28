@@ -18,6 +18,8 @@
       url = "github:MissingLincx/wallpapers";
       flake = false;
     };
+
+
   };
 
   outputs = { self, nixpkgs,  home-manager, wallpapers, nvf, nixos-wsl, ...} @ inputs: {
@@ -49,7 +51,11 @@
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
 	        home-manager.backupFileExtension = "backup";
-            home-manager.users.linc = import ./home.nix;
+            home-manager.users.linc = {
+              imports = [
+                ./home.nix
+              ];
+            };
           }
         ];
       };

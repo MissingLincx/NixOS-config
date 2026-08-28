@@ -8,7 +8,6 @@
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
-      ../../modules/gaming/gaming-services.nix
       ../../modules/desktop/cosmic.nix 
       ../../modules/services/tailscale.nix
       ../../modules/services/ssh.nix
@@ -109,6 +108,7 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
+    pkgs.librewolf
   #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
   #  wget
   ];
