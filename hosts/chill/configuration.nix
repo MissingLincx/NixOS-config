@@ -89,12 +89,16 @@
 
   # --- System Packages ---
   environment.systemPackages = with pkgs; [
-    pkgs.sbctl          #for limine
+    pkgs.sbctl          ##for limine
+    (inkscape-with-extensions.override {
+      inkscapeExtensions = with inkscape-extensions; [ inkstitch ];
+      })
     git
     vim
     curl
     pkgs.ethtool
     wakeonlan
+    orca-slicer
   ];
 
   system.stateVersion = "25.11"; 

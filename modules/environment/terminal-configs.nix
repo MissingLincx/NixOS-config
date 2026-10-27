@@ -49,5 +49,7 @@
     zoxide
     nmap
     glow
+    traceroute
+    pkgs.bind #nslookup
   ];
 }

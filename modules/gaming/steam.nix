@@ -7,4 +7,8 @@
     dedicatedServer.openFirewall = true;
     localNetworkGameTransfers.openFirewall = true;
   };
+
+  programs.steam.package = pkgs.steam.override {
+    extraArgs = "-system-composer";
+  };
 }

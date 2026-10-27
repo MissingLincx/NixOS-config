@@ -21,6 +21,7 @@
   };
 
   environment.systemPackages = with pkgs; [
+    vesktop
     lutris
     wineWow64Packages.wayland
     winetricks
